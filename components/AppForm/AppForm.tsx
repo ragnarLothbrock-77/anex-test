@@ -29,12 +29,12 @@ export const AppForm = ({ onSubmit, initialValue }: AppFormProps) => {
       onSubmit={onSubmit}
       validate={validation}
       render={({ handleSubmit }) => (
-        <form className="grid grid-cols-2 bg-gray-700 p-10 gap-8 rounded-xl" onSubmit={handleSubmit}>
-          <Input autofocus={true} name='name' label='Name' placeholder="Your Name" />
-          <Input name='phone' label='Phone number' placeholder="+ 7 9.. ... .. .." />
-          <Input name='email' label='Email' placeholder="Your email" />
-          <Input name='city' label='City' placeholder="City you born" />
-          <Input name='company' label='Company Name' placeholder="Current company" />
+        <form data-testid="form" className="grid grid-cols-2 bg-gray-700 p-10 gap-8 rounded-xl" onSubmit={handleSubmit}>
+          <Input testid="input-name-field" autofocus={true} name='name' label='Name' placeholder="Your Name" />
+          <Input testid="input-phone-field" name='phone' label='Phone number' placeholder="+ 7 9.. ... .. .." />
+          <Input testid="input-email-field" name='email' label='Email' placeholder="Your email" />
+          <Input testid="input-city-field" name='city' label='City' placeholder="City you born" />
+          <Input testid="input-company-field" name='company' label='Company Name' placeholder="Current company" />
 
           <button className="h-2/3 text-center self-end  bg-blue-500 rounded-lg text-md font-bold" type="submit">Submit</button>
         </form>

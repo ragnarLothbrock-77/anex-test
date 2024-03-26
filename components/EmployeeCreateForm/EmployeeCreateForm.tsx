@@ -3,6 +3,10 @@ import { UsersInterface } from '../../interfaces/user.interface';
 import { UsersServices } from '../../app/services/users.services';
 import { generateRandomString } from '../../helpers/stringIdGenerator';
 import { AppForm } from '../AppForm/AppForm';
+import { useState } from 'react';
+import { Toast } from '../Toast/Toast';
+import { Controller } from '../Controller/Controller';
+import Close from '../../public/close.svg';
 
 interface FormProps {
   setFormOpen: (arg: boolean) => void;
@@ -10,22 +14,38 @@ interface FormProps {
 
 
 export const EmployeeForm = ({ setFormOpen }: FormProps) => {
+  const [isToast, setIsToast] = useState<boolean>(false)
   const queryClient = useQueryClient();
-  const { mutateAsync } = useMutation('create_user', (data: UsersInterface) => UsersServices.createUser(data), {
+  const { mutate } = useMutation('create_user', (data: UsersInterface) => UsersServices.createUser(data), {
     onSuccess: () => {
       queryClient.invalidateQueries('users_list');
-      setFormOpen(false);
+      setIsToast(true);
+      setTimeout(() => {
+        setIsToast(false);
+        setFormOpen(false);
+      }, 1000);
     }
   });
 
 
-  const handleEmployeeCreate = async (values: any) => {
-    await mutateAsync({
+  const handleEmployeeCreate = (values: any) => {
+    mutate({
       ...values,
       id: generateRandomString()
     })
   }
 
 
-  return <AppForm onSubmit={handleEmployeeCreate} />
+  return (
+    <>
+      {
+        isToast
+          ? <Toast variant='success' text='Success' />
+          : <>
+            <AppForm onSubmit={handleEmployeeCreate} />
+            <Controller onClick={() => setFormOpen(false)} isAbsolute={true} bg="bg-red-500">{<Close />}</Controller>
+          </>
+      }
+    </>
+  )
 }

@@ -7,6 +7,7 @@ import { AppForm } from "../../components/AppForm/AppForm";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { UsersInterface } from "../../interfaces/user.interface";
 import { UsersServices } from "../../app/services/users.services";
+import { Toast } from "../../components/Toast/Toast";
 
 
 const STORY_MOC_STRING = 'jlnn';
@@ -16,60 +17,86 @@ export default function SelectedEmployee() {
   const queryClient = useQueryClient();
   const { data } = useQuery('users_list', () => UsersServices.getUsers());
 
-  const [updateFormOpen, setUpdateFormOpen] = useState<boolean>(false);
+  const [isFormOpen, setIsFormOpen] = useState<boolean>(false);
+  const [isSuccesResponce, setIsSuccesResponce] = useState<boolean>(false);
+  const [isToast, setIsToast] = useState<boolean>(false);
 
   const currentId = asPath.split('/').join('') || STORY_MOC_STRING;
   const initialValue = data?.find(function (item) {
     return item.id === currentId;
   });
 
+
   const deleteMutation = useMutation(['delete_employee'], (id: string) => UsersServices.deleteUser(id), {
-    onMutate: () => {
-      console.log('Mutate');
-    },
     onSuccess: () => {
-      console.log(data);
       queryClient.invalidateQueries('users_list');
-      console.log(data);
-      push('/');
+      setIsToast(true);
+      setIsSuccesResponce(true);
+      setTimeout(() => {
+        push('/');
+      }, 1000);
+    },
+    onError: () => {
+      setIsToast(true);
+      setTimeout(() => {
+        setIsToast(false);
+      }, 1000);
     }
   })
 
   const updateMutation = useMutation('update_employee', (data: UsersInterface) => UsersServices.updateUser(data, currentId), {
     onSuccess: () => {
       queryClient.invalidateQueries('users_list');
-      setUpdateFormOpen(false);
+      setIsFormOpen(false);
+      setIsToast(true);
+      setIsSuccesResponce(true);
+      setTimeout(() => {
+        setIsSuccesResponce(false);
+        setIsToast(false);
+      }, 1000)
+    },
+    onError: () => {
+      setIsFormOpen(false);
+      setIsToast(true);
+      setTimeout(() => {
+        setIsToast(false);
+        setIsFormOpen(true);
+      }, 1000)
     }
   });
 
-  const handleFormUpdate = async (values: any) => {
-    await updateMutation.mutateAsync({
+
+  const handleFormUpdate = (values: any) => {
+    return updateMutation.mutate({
       ...values
     })
   }
 
-  const handleEmployeeDelete = async () => {
-    await deleteMutation.mutateAsync(currentId);
+  const handleEmployeeDelete = () => {
+    return deleteMutation.mutate(currentId);
   }
 
-  const handleProfilClose = () => {
+  const handleProfileClose = () => {
     push(`/`);
   }
 
   return (
     <div className='w-full h-full flex justify-center items-center'>
       {
-        updateFormOpen
+        isFormOpen
           ? <>
             <AppForm onSubmit={handleFormUpdate} initialValue={initialValue} />
-            <Controller onClick={() => setUpdateFormOpen(false)} bg="bg-red-500" isAbsolute><Close /></Controller>
+            <Controller onClick={() => setIsFormOpen(false)} bg="bg-red-500" isAbsolute><Close /></Controller>
           </>
-          : <>
-            <Card currentUser={initialValue as UsersInterface} onDelete={handleEmployeeDelete} setUpdateFormOpen={setUpdateFormOpen} />
-            <Controller onClick={handleProfilClose} bg="bg-red-500" isAbsolute><Close /></Controller>
-          </>
+          : isToast
+            ? <Toast
+              variant={isSuccesResponce ? 'success' : 'error'}
+              text={isSuccesResponce ? 'Success' : 'Error. Try again'} />
+            : <>
+              <Card currentUser={initialValue as UsersInterface} onDelete={handleEmployeeDelete} setUpdateFormOpen={setIsFormOpen} />
+              <Controller onClick={handleProfileClose} bg="bg-red-500" isAbsolute><Close /></Controller>
+            </>
       }
-
     </div>
   )
 }
