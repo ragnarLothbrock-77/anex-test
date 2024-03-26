@@ -1,0 +1,92 @@
+{
+  "users": [
+    {
+      "id": "dcsc",
+      "name": "Leanne Graham",
+      "email": "Sincere@april.biz",
+      "city": "Gwenborough",
+      "phone": "1-770-736-8031 x56442",
+      "company": "Romaguera-Crona"
+    },
+    {
+      "id": "sdcc",
+      "name": "Patricia Lebsack",
+      "email": "Julianne.OConner@kory.org",
+      "city": "South Elvises",
+      "phone": "493-170-9623 x156",
+      "company": "Robel-Corkery-Stone"
+    },
+    {
+      "id": "gfbb",
+      "name": "Chelsey Dietrich",
+      "email": "Lucio_Hettinger@annie.ca",
+      "city": "Roscoeview",
+      "phone": "(254)954-1289",
+      "company": "Keebler LLC"
+    },
+    {
+      "id": "njhh",
+      "name": "Simon Berman",
+      "phone": "89251481910",
+      "email": "sammirosh@gmail.com",
+      "city": "Moscow",
+      "company": "Anex"
+    },
+    {
+      "id": "jlnn",
+      "name": "Qwisach HaDerech",
+      "phone": "2323847734",
+      "email": "a@gmail.com",
+      "city": "Dune",
+      "company": "Arakis"
+    },
+    {
+      "id": "efdv",
+      "name": "Roman Polansky",
+      "phone": "8889948763",
+      "email": "romka@gmail.com",
+      "city": "Poznan",
+      "company": "Hollywood"
+    },
+    {
+      "id": "df0b",
+      "name": "John Sina",
+      "phone": "9434343434",
+      "email": "sina@sd.com",
+      "city": "Los Palmos",
+      "company": "Butler&Co"
+    },
+    {
+      "id": "280f",
+      "name": "Antony Cooper",
+      "email": "an@jsd",
+      "company": "Stewart&Co",
+      "phone": "884438348",
+      "city": "Aregon"
+    },
+    {
+      "id": "3fj4",
+      "phone": "dcd",
+      "name": "Feid Rauta",
+      "email": "Feid@ssd",
+      "city": "Gedi Prime",
+      "company": "Harkonens"
+    },
+    {
+      "id": "adc2",
+      "phone": "sdcdsc",
+      "email": "sdcdsc",
+      "city": "sdcdsc",
+      "company": "sdcsdc",
+      "name": "Vladimir Harkonen"
+    },
+    {
+      "id": "j946",
+      "name": "John Word 2",
+      "phone": "344334",
+      "email": "sdcd",
+      "city": "dscsdc",
+      "company": "sdccdsc"
+    }
+  ]
+}
